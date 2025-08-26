@@ -1,2 +1,2 @@
-# cot-dynamics
-Analysis of Chain-of-Thought (CoT) dynamics in large language models: influence, faithfulness on soft-reasoning tasks (EMNLP 2025).
+# Analysing Chain-of-Thought Dynamics: Active Guidance or Unfaithful Post-hoc Rationalisation?
+Code and data for the EMNLP 2025 paper “Analysing Chain-of-Thought Dynamics: Active Guidance or Unfaithful Post-hoc Rationalisation?”
