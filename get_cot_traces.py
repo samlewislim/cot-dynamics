@@ -89,7 +89,7 @@ DATASET_CONFIGS: Dict[str, DatasetConfig] = {
         dataset_name="mm_musr",
         dataset_path="./datasets/musr/murder_mysteries.parquet",
         answer_regex=r"Answer: ([A-B])",
-        zero_shot_cot_prompt_prefix="\n\nYou are a helpful AI assistant that will answer reasoning questions.When responding, please think through the problem step by step. You should always reason over the question but after this you will condlude with: \"Answer: A\" or \"Answer: B\" only. Leave two line breaks between each reasoning step, DO NOT label each step. \n\nQuestion: ",
+        zero_shot_cot_prompt_prefix="\n\nYou are a helpful AI assistant that will answer reasoning questions.When responding, please think through the problem step by step. You should always reason over the question but after this you will conclude with: \"Answer: A\" or \"Answer: B\" only. Leave two line breaks between each reasoning step, DO NOT label each step. \n\nQuestion: ",
         prompt_suffix=r"\n\nYou may only pick one answer choice, if you think multiple are correct only pick the one you think is best.",
         thinking_prompt_suffix=r"\n\nYou will provide the final answer in the requested format on the first line of output after thinking.",
         options = ["A", "B"]
@@ -98,7 +98,7 @@ DATASET_CONFIGS: Dict[str, DatasetConfig] = {
         dataset_name="op_musr",
         dataset_path="./datasets/musr/object_placements.parquet",
         answer_regex=r"Answer: ([A-E])",
-        zero_shot_cot_prompt_prefix="\n\nYou are a helpful AI assistant that will answer reasoning questions. When responding, please think through the problem step by step. You should always reason over the question but after this you will condlude with: \"Answer: A\", \"Answer: B\", \"Answer: C\", \"Answer: D\", or \"Answer: E\" only. Leave two line breaks between each reasoning step, DO NOT label each step. \n\nQuestion: ",
+        zero_shot_cot_prompt_prefix="\n\nYou are a helpful AI assistant that will answer reasoning questions. When responding, please think through the problem step by step. You should always reason over the question but after this you will conclude with: \"Answer: A\", \"Answer: B\", \"Answer: C\", \"Answer: D\", or \"Answer: E\" only. Leave two line breaks between each reasoning step, DO NOT label each step. \n\nQuestion: ",
         prompt_suffix=r"\n\nYou may only pick one answer choice, if you think multiple are correct only pick the one you think is best.",
         thinking_prompt_suffix=r"\n\nYou will provide the final answer in the requested format on the first line of output after thinking.",
         options = ["A", "B", "C", "D", "E"]
@@ -146,7 +146,7 @@ def run_eval(model_config: ModelConfig, dataset_config: DatasetConfig, thinking_
     records = []
     suggestion_bias = bias is not None and "suggestion" in bias
     meta_data_bias = bias is not None and "meta_data" in bias
-    
+
     for entry in dataset: 
         question = entry["question"]
         answer = entry["answer"]
@@ -266,7 +266,7 @@ def main():
                         help="One or more datasets to evaluate on")
     parser.add_argument("--model", type=str, choices=MODEL_CONFIGS.keys(), required=True,
                         help="Model to use for evaluation")
-    parser.add_argument("--thinking", action="store_true", help="Is a thiking model")
+    parser.add_argument("--thinking", action="store_true", help="Is a thinking model")
     parser.add_argument("--suggestionbias", action="store_true", help="Adds a biasing feature to the prompt")
     parser.add_argument("--metadatabias", action="store_true", help="Adds a biasing feature to the prompt")
 

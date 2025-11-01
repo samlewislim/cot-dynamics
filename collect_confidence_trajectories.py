@@ -33,7 +33,7 @@ def calculate_answer_probabilities_batch(
 
     partial_probabilities = []
     full_logits = []
-    option_indecies = []
+    option_indices = []
     option_ids = torch.tensor([
             tokenizer(op, return_tensors="pt", add_special_tokens=False)["input_ids"] for op in options 
             ])
@@ -53,8 +53,8 @@ def calculate_answer_probabilities_batch(
             outputs = model(input_ids=input_ids, attention_mask=attention_mask, use_cache=False)
             logits = outputs.logits
 
-            batch_indicies = torch.arange(len(batch))
-            last_token_logits = logits[batch_indicies, seq_lengths, :]
+            batch_indices = torch.arange(len(batch))
+            last_token_logits = logits[batch_indices, seq_lengths, :]
 
             option_logits = last_token_logits[:, option_ids]
             partial_probabilities.extend(option_logits.cpu().tolist())
@@ -65,10 +65,10 @@ def calculate_answer_probabilities_batch(
             full_logits.append(option_probs.cpu().tolist())
 
 
-            option_indecies.append(option_ids.cpu().tolist())
+            option_indices.append(option_ids.cpu().tolist())
         del input_ids, outputs, logits, last_token_logits, inputs, option_logits, attention_mask, full_probs, option_probs
         torch.cuda.empty_cache()
-    return partial_probabilities, full_logits, option_indecies
+    return partial_probabilities, full_logits, option_indices
 
 
 
@@ -180,7 +180,7 @@ def run_answer_consistency(
                                     response,
                                     answer_prefix,
                                     options,
-                                    r1_model=False)
+                                    r1_model)
         except Exception as e:
             print(f"Error processing index {index}: {e}")
             df.at[index, cot_steps_column] = None
@@ -250,7 +250,6 @@ def main():
         r1_model = True
     else:
         r1_model = False
-    answer_regex = answer_regex
     run_answer_consistency(
         args.dataset,
         model,
